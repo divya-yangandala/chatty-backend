@@ -26,7 +26,7 @@ export class SignUp {
 
     const checkIfUserExist: IAuthDocument = await authService.getUserByUsernameOrEmail(username, email);
     if (checkIfUserExist) {
-      throw new BadRequestError('Inavlid Credentials');
+      throw new BadRequestError('Invalid Credentials');
     }
 
     //creating objectId by our own

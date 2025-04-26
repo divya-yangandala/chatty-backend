@@ -7,8 +7,14 @@ import { BadRequestError } from '@global/helpers/error-handler';
 import { authService } from '@service/db/auth.service';
 import { config } from '@root/config';
 import HTTP_STATUS from 'http-status-codes';
-import { IUserDocument } from '@user/interfaces/user.interface';
+import { IResetPasswordParams, IUserDocument } from '@user/interfaces/user.interface';
 import { userService } from '@service/db/user.service';
+import { mailTransport } from '@service/emails/mail.transport';
+import { emailQueue } from '@service/queues/email.queue';
+import { forgotPasswordTemplate } from '@service/emails/templates/forgot-password/forgot-password-template';
+import moment from 'moment';
+import publicIP from 'ip';
+import { resetPasswordTemplate } from '@service/emails/templates/reset-password/reset-password-template';
 
 export class SignIn {
   @joiValidation(loginSchema)
@@ -16,7 +22,7 @@ export class SignIn {
     const { username, password } = req.body;
 
     const existingUser: IAuthDocument = await authService.getAuthUserByUsername(username);
-    console.log('existingUser: ', existingUser);
+    // console.log('existingUser: ', existingUser);
     if (!existingUser) {
       throw new BadRequestError('Invalid Credentials');
     }
@@ -43,6 +49,19 @@ export class SignIn {
       },
       config.JWT_TOKEN!
     );
+
+    const templateParams: IResetPasswordParams = {
+      username: existingUser.username!,
+      email: existingUser.email!,
+      ipaddress: publicIP.address(),
+      date: moment().format('DD/MM/YYYY HH:mm')
+    }
+
+    // await mailTransport.sendEmail(config.SENDER_EMAIL!, 'Testing development Email', 'This is a test email to send devleopment to email box')
+    // const resetLink = `${config.CLIENT_URL}/reset-password?token=256667107655`;
+    // const template: string = forgotPasswordTemplate.passwordResetTemplate(existingUser.username!, resetLink);
+    // const template: string = resetPasswordTemplate.passwordResetConfirmationTemplate(templateParams);
+    // emailQueue.addEmailJob('forgotPasswordEmail', {template, receiverEmail: 'marlen.wehner@ethereal.email', subject: 'Password reset confirmation'});
 
     req.session = { jwt: userJwt };
 
