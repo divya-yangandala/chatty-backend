@@ -43,7 +43,7 @@ export class SignUp {
     });
     // once userObjectId is created its not going to chnage even if the user changes a profile picture so will going to have same url
     const result: UploadApiResponse = (await uploads(avatarImage, `${userObjectId}`, true, true)) as UploadApiResponse;
-    //  https://res.cloudinary.com/123/userObectId
+    //  https://res.cloudinary.com/123/userObjectId
     // otherwise https://res.cloudinary.com/123/<cloudinary_public_id>  this keeps generating new publicId and we don't want that
 
     if (!result?.public_id) {
