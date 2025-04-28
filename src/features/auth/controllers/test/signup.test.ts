@@ -9,6 +9,7 @@ import { AnyExpression } from "mongoose";
 
 // We need to mock all the cache, queue and cloudinary uploads
 
+jest.useFakeTimers();
 jest.mock('@service/queues/base.queue');
 jest.mock('@service/queues/auth.queue');
 jest.mock('@service/queues/auth.queue');

@@ -14,6 +14,7 @@ import { createAdapter } from '@socket.io/redis-adapter';
 import applicationRoutes from '@root/routes';
 import Logger from 'bunyan';
 import { IErrorResponse, CustomError } from '@global/helpers/error-handler';
+import { SocketIOPostHandler } from '@socket/post';
 
 //app.use() is used to call amiddleware in express
 
@@ -123,5 +124,8 @@ export class ChattyServer {
 
   // creating a private method so that we can define all socket IO classes we are going to create
 
-  private socketIOConnections(io: Server): void {}
+  private socketIOConnections(io: Server): void {
+    const postSocketHandler: SocketIOPostHandler = new SocketIOPostHandler(io);
+    postSocketHandler.listen();
+  }
 }

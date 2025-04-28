@@ -1,6 +1,7 @@
 import { authRoutes } from '@auth/routes/authRoutes';
 import { currentUserRoutes } from '@auth/routes/currentRoutes';
 import { authMiddleware } from '@global/helpers/auth-middleware';
+import { postRoutes } from '@post/routes/postRoutes';
 import { serverAdapter } from '@service/queues/base.queue';
 import { Application } from 'express';
 
@@ -16,6 +17,8 @@ export default (app: Application) => {
 
     app.use(BASE_PATH, authMiddleware.verifyUser, currentUserRoutes.routes());
     // everytime this route is called it will check this verifyUser middleware for jwt token and then proceed
+
+    app.use(BASE_PATH, authMiddleware.verifyUser, postRoutes.routes());
   };
   routes();
 };
