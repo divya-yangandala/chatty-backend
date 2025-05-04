@@ -22,7 +22,6 @@ export class SignIn {
     const { username, password } = req.body;
 
     const existingUser: IAuthDocument = await authService.getAuthUserByUsername(username);
-    // console.log('existingUser: ', existingUser);
     if (!existingUser) {
       throw new BadRequestError('Invalid Credentials');
     }
