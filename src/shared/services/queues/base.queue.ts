@@ -8,8 +8,9 @@ import { config } from '@root/config';
 import { IAuthJob } from '@auth/interfaces/auth.interface';
 import { IEmailJob } from '@user/interfaces/user.interface';
 import { IPostJobData } from '@post/interfaces/post.interface';
+import { IReactionJob } from '@reaction/interfaces/reaction.interface';
 
-type IBaseJobData = IAuthJob | IEmailJob | IPostJobData;
+type IBaseJobData = IAuthJob | IEmailJob | IPostJobData | IReactionJob;
 
 let bullAdapters: BullAdapter[] = [];
 
@@ -59,6 +60,6 @@ export abstract class BaseQueue {
     this.queue.process(name, concurrency, callback);
   }
 
-  //concurrency is no. of ob the queue will process at a given time say 5 at at time
+  //concurrency is no. of job the queue will process at a given time say 5 at at time
   // and say one job completes it will add one job from queue to maintain concurrency
 }

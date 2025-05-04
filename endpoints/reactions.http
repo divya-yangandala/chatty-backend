@@ -1,0 +1,59 @@
+@baseUrl = http://localhost:5000
+
+@urlPath = api/v1
+
+###
+POST {{baseUrl}}/{{urlPath}}/post/reaction
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+  "userTo": "67fd5077103905340c419b3b",
+  "postId": "681762c00bbc572748120aee",
+  "type": "happy",
+  "previousReaction": "",
+  "postReactions": {"like":0,"love": 0,"happy":1,"wow":0,"sad":0,"angry":0},
+  "profilePicture":"https://res.cloudinary.com/dnzbnwqfd/image/upload/v1744654458/67fd5077103905340c419b3b"
+}
+
+
+
+
+###
+DELETE {{baseUrl}}/{{urlPath}}/post/reaction/681585082734712a4e67bd69/like/{"like":0,"love": 0,"happy":0,"wow":0,"sad":0,"angry":0}
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+}
+
+
+###
+GET {{baseUrl}}/{{urlPath}}/post/reactions/681762c00bbc572748120aee
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+}
+
+
+###
+GET {{baseUrl}}/{{urlPath}}/post/single/reaction/username/Divya/681762c00bbc572748120aee
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+}
+
+###
+GET {{baseUrl}}/{{urlPath}}/post/reactions/username/Manny
+Content-Type: application/json
+Accept: application/json
+withCredentials: true
+
+{
+}
