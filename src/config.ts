@@ -51,7 +51,7 @@ class Config {
 
   //So I just want to validate to make sure that the configure the environment variables actually exist
   public validateConfig(): void {
-    console.log(this);
+    // console.log(this);
     //this contains objects. inside this this keyword, we have key value pairs and the key value pairs of properties
     for (const [key, value] of Object.entries(this)) {
       if (value === undefined) {
