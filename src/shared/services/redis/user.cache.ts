@@ -112,7 +112,7 @@ export class UserCache extends BaseCache {
       const response: IUserDocument = (await this.client.HGETALL(`users:${userId}`)) as unknown as IUserDocument;
       response.createdAt = new Date(Helpers.parseJson(`${response.createdAt}`));
       response.postsCount = Helpers.parseJson(`${response.postsCount}`);
-      response.blocked = Helpers.parseJson(`${response.createdAt}`);
+      response.blocked = Helpers.parseJson(`${response.blocked}`);
       response.blockedBy = Helpers.parseJson(`${response.blockedBy}`);
       response.quote = Helpers.parseJson(`${response.quote}`);
       response.notifications = Helpers.parseJson(`${response.notifications}`);

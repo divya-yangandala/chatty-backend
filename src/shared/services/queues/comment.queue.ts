@@ -1,5 +1,5 @@
 import { commentWorker } from "@worker/comment.worker";
-import { BaseQueue } from "./base.queue";
+import { BaseQueue } from "@service/queues/base.queue";
 import { ICommentJob } from "@comment/interfaces/comment.interface";
 
 class CommentQueue extends BaseQueue {
