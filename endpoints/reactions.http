@@ -9,11 +9,11 @@ Accept: application/json
 withCredentials: true
 
 {
-  "userTo": "67fd5077103905340c419b3b",
-  "postId": "681762c00bbc572748120aee",
-  "type": "happy",
+  "userTo": "68224058b4365a818291fdb7",
+  "postId": "6828cecbeb45ced9b26bcc1e",
+  "type": "love",
   "previousReaction": "",
-  "postReactions": {"like":0,"love": 0,"happy":1,"wow":0,"sad":0,"angry":0},
+  "postReactions": {"like":0,"love": 1,"happy":0,"wow":0,"sad":0,"angry":0},
   "profilePicture":"https://res.cloudinary.com/dnzbnwqfd/image/upload/v1744654458/67fd5077103905340c419b3b"
 }
 

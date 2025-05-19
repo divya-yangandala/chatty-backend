@@ -3,6 +3,7 @@ import { currentUserRoutes } from '@auth/routes/currentRoutes';
 import { commentRoutes } from '@comment/routes/commentRoutes';
 import { followerRoutes } from '@follower/routes/followerRoutes';
 import { authMiddleware } from '@global/helpers/auth-middleware';
+import { notificationRoutes } from '@notification/routes/notificationRoutes';
 import { postRoutes } from '@post/routes/postRoutes';
 import { reactionRoutes } from '@reaction/routes/reactionRoutes';
 import { serverAdapter } from '@service/queues/base.queue';
@@ -28,6 +29,8 @@ export default (app: Application) => {
     app.use(BASE_PATH, authMiddleware.verifyUser, commentRoutes.routes());
 
     app.use(BASE_PATH, authMiddleware.verifyUser, followerRoutes.routes());
+
+    app.use(BASE_PATH, authMiddleware.verifyUser, notificationRoutes.routes());
   };
   routes();
 };

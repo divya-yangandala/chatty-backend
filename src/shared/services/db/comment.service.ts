@@ -1,10 +1,15 @@
+import { NotificationModel } from '@notification/models/notification.schema';
 import { ICommentDocument, ICommentJob, ICommentNameList, IQueryComment } from "@comment/interfaces/comment.interface";
 import { CommentsModel } from "@comment/models/comment.schema";
 import { IPostDocument } from "@post/interfaces/post.interface";
 import { PostModel } from "@post/models/post.schema";
 import { UserCache } from "@service/redis/user.cache";
 import { IUserDocument } from "@user/interfaces/user.interface";
-import { Query } from "mongoose";
+import mongoose, { Query } from "mongoose";
+import { INotificationDocument, INotificationTemplate } from '@notification/interfaces/notification.interface';
+import { socketIONotificationObject } from '@socket/notification';
+import { notificationTemplate } from '@service/emails/templates/notifications/notification.template';
+import { emailQueue } from '@service/queues/email.queue';
 
 const userCache: UserCache = new UserCache();
 
@@ -19,9 +24,37 @@ class CommentService {
     ) as unknown as  Query<IPostDocument, IPostDocument>
 
     const user: Promise<IUserDocument> = userCache.getUserFromCache(userTo) as Promise<IUserDocument>;  // send notification to user
-    const reponse: [ICommentDocument, IPostDocument, IUserDocument] = await Promise.all([comments, post, user]);
-
+    const response: [ICommentDocument, IPostDocument, IUserDocument] = await Promise.all([comments, post, user]);
     // send comment notifications
+    if (response[2].notifications.comments && userFrom !== userTo) {
+      const notificationModel: INotificationDocument = new NotificationModel();
+      const notifications = await notificationModel.insertNotification({
+        userFrom,
+        userTo,
+        message: `${username} commented on your post`,
+        notificationType: 'comment',
+        entityId: new mongoose.Types.ObjectId(postId),  // since we're sending notifications on post;
+        createdItemId: new mongoose.Types.ObjectId(response[0]._id!),
+        createdAt: new Date(),
+        comment: comment.comment,
+        post: response[1].post,
+        imgId: response[1].imgId!,  // !because we are expecting typescript to return string and not undefined
+        imgVersion: response[1].imgVersion!,
+        gifUrl: response[1].gifUrl!,
+        reaction: ''
+      });
+      // send to client with socketio
+      socketIONotificationObject.emit('insert notification', notifications, { userTo });
+
+      //send to email queue
+      const templateParams: INotificationTemplate = {
+        username: response[2].username!,
+        message: `${username} commented on your post`,
+        header: 'Comment Notification'
+      };
+      const template: string = notificationTemplate.notificationMessageTemplate(templateParams);
+      emailQueue.addEmailJob('followersEmail', { receiverEmail: response[2].email!, template, subject: 'post notification' })
+    }
   }
 
   // method to get single or multipe comments of a post

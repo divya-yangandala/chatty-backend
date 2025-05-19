@@ -9,8 +9,8 @@ withCredentials: true
 
 {
   "post": "This is my first post",
-  "bgColor": "gray",
-  "privacy":"Private",
+  "bgColor": "blue",
+  "privacy":"Public",
   "gifUrl": "",
   "profilePicture":"https://res.cloudinary.com/dnzbnwqfd/image/upload/v1744654458/67fd5077103905340c419b3b",
   "feelings": "happy"

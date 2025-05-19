@@ -68,9 +68,9 @@ export class UserCache extends BaseCache {
       'followingCount',
       `${followingCount}`,
       'notifications',
-      `${notifications}`,
+      JSON.stringify(notifications),
       'social',
-      `${social}`
+      JSON.stringify(social)
     ];
 
     const thirdList: string[] = [
@@ -110,6 +110,7 @@ export class UserCache extends BaseCache {
       }
 
       const response: IUserDocument = (await this.client.HGETALL(`users:${userId}`)) as unknown as IUserDocument;
+      console.log("responseee  ", response);
       response.createdAt = new Date(Helpers.parseJson(`${response.createdAt}`));
       response.postsCount = Helpers.parseJson(`${response.postsCount}`);
       response.blocked = Helpers.parseJson(`${response.blocked}`);

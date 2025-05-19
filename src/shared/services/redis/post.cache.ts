@@ -45,8 +45,8 @@ export class PostCache extends BaseCache {
   const dataToSave = {
     '_id': `${_id}`,
     'userId': `${userId}`,
-    'username': `${username},
-    'email': ${email}`,
+    'username': `${username}`,
+    'email': `${email}`,
     'avatarColor': `${avatarColor}`,
     'profilePicture': `${profilePicture}`,
     'post': `${post}`,
