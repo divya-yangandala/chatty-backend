@@ -63,6 +63,7 @@ export class Create {
         }
     const postObjectId: ObjectId = new ObjectId();
 
+    console.log("req   ", req.currentUser);
     const createdPost: IPostDocument = {
       _id: postObjectId,
       userId: req.currentUser!.userId,
