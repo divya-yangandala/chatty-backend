@@ -18,6 +18,7 @@ import { SocketIOPostHandler } from '@socket/post';
 import { SocketIOFollowerHandler } from '@socket/follower';
 import { SocketIOUserHandler } from '@socket/user';
 import { SocketIONotificationHandler } from '@socket/notification';
+import { SocketIOImageHandler } from '@socket/image';
 
 //app.use() is used to call amiddleware in express
 
@@ -132,10 +133,12 @@ export class ChattyServer {
     const followerSocketHandler: SocketIOFollowerHandler = new SocketIOFollowerHandler(io);
     const userSocketHandler: SocketIOUserHandler = new SocketIOUserHandler(io);
     const notificationSocketHandler: SocketIONotificationHandler = new SocketIONotificationHandler();
+    const imageSocketHandler: SocketIOImageHandler = new SocketIOImageHandler();
 
     postSocketHandler.listen();
     followerSocketHandler.listen();
     userSocketHandler.listen();
     notificationSocketHandler.listen(io);
+    imageSocketHandler.listen(io);
   }
 }

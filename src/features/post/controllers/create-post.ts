@@ -10,6 +10,7 @@ import { ObjectId } from "mongodb";
 import { UploadApiResponse } from "cloudinary";
 import { uploads } from '@global/helpers/cloudinary-upload';
 import { BadRequestError } from "@global/helpers/error-handler";
+import { imageQueue } from "@service/queues/image.queue";
 
 const postCache: PostCache = new PostCache();
 
@@ -96,6 +97,12 @@ export class Create {
     postQueue.addPostJob('addPostToDB', {key: req.currentUser!.userId, value: createdPost});
     // we need to add the image to our Image collection in DB for now just adding the comment
     // call image queue to add image to mongo DB
+
+    imageQueue.addImageJob('addImageToDB', {
+      key: `${req.currentUser!.userId}`,
+      imgId: result.public_id,
+      imgVersion: result.version.toString()
+    });
 
     res.status(HTTP_STATUS.CREATED).json({ message: 'Post created with image successfully'});
   }

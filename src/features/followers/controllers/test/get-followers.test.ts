@@ -9,7 +9,7 @@ import { existingUserTwo } from '@root/mocks/user.mock';
 
 jest.useFakeTimers();
 jest.mock('@service/queues/base.queue');
-jest.mock('@service/redis/follower.cache');
+jest.mock('@service/redis/followers.cache');
 
 describe('Get', () => {
   beforeEach(() => {
