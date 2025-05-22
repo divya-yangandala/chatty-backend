@@ -8,7 +8,7 @@ import { Remove } from '@follower/controllers/unfollow-user';
 
 jest.useFakeTimers();
 jest.mock('@service/queues/base.queue');
-jest.mock('@service/redis/follower.cache');
+jest.mock('@service/redis/followers.cache');
 
 describe('Remove', () => {
   beforeEach(() => {
