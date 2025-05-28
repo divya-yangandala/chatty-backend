@@ -17,6 +17,10 @@ class EmailQueue extends BaseQueue {
     this.processJob('reactionsEmail', 5, emailWorker.addNotificationEmail);
     this.processJob('directMessageEmail', 5, emailWorker.addNotificationEmail);
   }
+
+  public sendEmailJob(name: string, data: any): void {
+      this.addJob(name, data);
+  }
 }
 
 export const emailQueue: EmailQueue = new EmailQueue
