@@ -1,5 +1,6 @@
 import { ISenderReceiver } from '@chat/interfaces/chat.interface';
 import { Server, Socket } from "socket.io";
+import { connectedUsersMap } from './user';
 
 
 export let socketIOChatObject: Server;
@@ -14,8 +15,13 @@ export class SocketIOChatHandler {
 
   public listen(): void  {
     this.io.on('connection', (socket: Socket) => {
-      socket.on('join room', (data: ISenderReceiver) => {
-        console.log(data);
+      socket.on('join room', (users: ISenderReceiver) => {   // whenever user wants to chat with another user, we emit this join room event
+        // console.log(data);
+        const { senderName, receiverName } = users;
+        const senderSocketId: string = connectedUsersMap.get(senderName) as string;
+        const receiverSocketId: string = connectedUsersMap.get(receiverName) as string;
+        socket.join(senderSocketId);
+        socket.join(receiverSocketId);
       })
     })
   }
