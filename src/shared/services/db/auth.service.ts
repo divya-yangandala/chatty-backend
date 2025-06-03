@@ -13,6 +13,7 @@ class AuthService {
       passwordResetExpires: tokenExpiration
     });
   }
+  
 
   public async getUserByUsernameOrEmail(username: string, email: string): Promise<IAuthDocument> {
     const query = {
