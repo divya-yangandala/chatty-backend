@@ -16,9 +16,11 @@ class PostService {
 
   public async getPosts(query: IGetPostsQuery, skip: 0 | number, limit: 0 | number, sort: Record<string, 1 | -1>): Promise<IPostDocument[]> {
     let postQuery = {};
-    if (query?.imgId && query?.gifUrl) {
+    if (query?.imgId && query?.gifUrl) {    // If query has imageId get all posts of that imageId
       postQuery = {$or: [{ imgId: {$ne: ''} }, { gifUrl: {$ne: ''} }]}
-    } else {
+    } else if (query?.videoId) {      // If query has videoId get all posts of that videoId
+      postQuery = { videoId: {$ne: ''} }
+    } else {          // else return all posts
       postQuery = query;
     }
 

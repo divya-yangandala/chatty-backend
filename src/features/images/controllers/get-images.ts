@@ -3,6 +3,8 @@ import { imageService } from "@service/db/image.service";
 import { Request, Response } from "express";
 import HTTP_STATUS from 'http-status-codes';
 
+
+// We will be using this on User's profile
 export class Get {
   public async images(req: Request, res: Response): Promise<void> {
     const images: IFileImageDocument[] = await imageService.getImages(req.params.userId);
